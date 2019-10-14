@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Callable, Dict, List
 from random import random
 
 
@@ -69,3 +69,26 @@ def user_selection(options: List[str], choice: str) -> str:
                 return option
 
     raise IndexError('invalid choice')
+
+
+def get_answer(
+    options: List[str],
+    input: Callable[..., str],
+        ) -> str:
+    """Ask for an answer until it gets one.
+
+    The input function will be invoked until the user provides an answer
+    within the options.
+    Parameters
+    ----------
+    options : List[str]
+        List of possible options
+    input : Callable[..., str]
+        Function to be invoked, possibly multiple times,
+        to get the input from the user
+
+    Returns
+    -------
+    str
+        The valid choice from the user
+    """

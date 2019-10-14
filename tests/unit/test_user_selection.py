@@ -69,10 +69,8 @@ def test_valid_choice():
 
 
 def test_get_answer():
-    _output = MagicMock()
-
     _input = MagicMock(return_value='blip')
-    answer = get_answer(['blip', 'blop'], _input, _output)
+    answer = get_answer(['blip', 'blop'], _input)
 
     # return the correct answer
     assert answer == 'blip'
@@ -83,7 +81,7 @@ def test_get_answer():
     ]
 
     _input = MagicMock(return_value='blop')
-    answer = get_answer(['blip', 'blop'], _input, _output)
+    answer = get_answer(['blip', 'blop'], _input)
 
     # return the correct answer
     assert answer == 'blop'
@@ -95,7 +93,6 @@ def test_get_answer():
 
 
 def test_retry_to_get_answer():
-    _output = MagicMock()
     answers = [False, False, True]
 
     def input_function():
@@ -104,7 +101,7 @@ def test_retry_to_get_answer():
         else:
             return 'not really there'
 
-    answer = get_answer(['blip', 'blop'], input_function, _output)
+    answer = get_answer(['blip', 'blop'], input_function)
 
     # return the correct answer
     assert answer == 'blip'
