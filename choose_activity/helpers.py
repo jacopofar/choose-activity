@@ -30,6 +30,11 @@ def weighted_choice(choices_and_weights: Dict[str, float]) -> str:
 def user_selection(options: List[str], choice: str) -> str:
     """Choose a value from the user input answer.
 
+    If the choice is a number, it's used as 1-based index.
+
+    If it's a string, the first option containing it as a substring is
+    returned, using the
+
     >>> user_selection(['apple', 'banana', 'orange'], 'banana')
     'banana'
 
@@ -49,4 +54,18 @@ def user_selection(options: List[str], choice: str) -> str:
         An element from the options list corresponding to the choice
     """
     if not len(options):
-        raise ValueError('No options given')
+        raise ValueError('no options given')
+    if choice.strip() == '':
+        raise IndexError('no choice')
+    try:
+        choice_index = int(choice)
+        if choice_index > len(options):
+            raise IndexError('invalid choice')
+        return options[choice_index - 1]
+
+    except ValueError:
+        for option in options:
+            if choice.lower() in option.lower():
+                return option
+
+    raise IndexError('invalid choice')
