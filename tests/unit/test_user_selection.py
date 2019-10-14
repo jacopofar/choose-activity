@@ -8,13 +8,13 @@ def test_no_options():
         user_selection(
             [],
             '')
-        assert "no options given!" in str(excinfo.value)
+    assert 'no options given' in str(excinfo.value)
 
     with pytest.raises(ValueError) as excinfo:
         user_selection(
             [],
             'bla')
-        assert "no options given!" in str(excinfo.value)
+    assert 'no options given' in str(excinfo.value)
 
 
 def test_empty_choice():
@@ -22,13 +22,13 @@ def test_empty_choice():
         user_selection(
             ['apple', 'banana', '🤠', 'blob'],
             '')
-        assert "no choice" in str(excinfo.value)
+    assert 'no choice' in str(excinfo.value)
 
     with pytest.raises(IndexError) as excinfo:
         user_selection(
             ['apple', 'banana', '🤠', 'blob'],
             '\n')
-        assert "no choice" in str(excinfo.value)
+    assert 'no choice' in str(excinfo.value)
 
 
 def test_valid_choice():
