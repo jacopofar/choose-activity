@@ -71,9 +71,25 @@ def user_selection(options: List[str], choice: str) -> str:
     raise IndexError('invalid choice')
 
 
+def enumerate_options(options: List[str]) -> str:
+    """Represents the options nicely
+
+    Parameters
+    ----------
+    options : List[str]
+        List of options to enumerate
+
+    Returns
+    -------
+    str
+        A string representing the options to be printed
+    """
+    return 'implement me'
+
+
 def get_answer(
     options: List[str],
-    input: Callable[..., str],
+    input_fun: Callable[..., str],
         ) -> str:
     """Ask for an answer until it gets one.
 
@@ -83,7 +99,7 @@ def get_answer(
     ----------
     options : List[str]
         List of possible options
-    input : Callable[..., str]
+    input_fun : Callable[..., str]
         Function to be invoked, possibly multiple times,
         to get the input from the user
 
@@ -92,3 +108,12 @@ def get_answer(
     str
         The valid choice from the user
     """
+
+    print(enumerate_options(options))
+
+    while True:
+        choice = input_fun()
+        try:
+            return user_selection(options, choice)
+        except IndexError as ie:
+            print(ie.args[0])

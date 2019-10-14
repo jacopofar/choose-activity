@@ -75,36 +75,21 @@ def test_get_answer():
     # return the correct answer
     assert answer == 'blip'
 
-    # asked the user for it
-    assert _input.call_args_list == [
-        ({}, (['blip', 'blop'], 'blip'))
-    ]
-
     _input = MagicMock(return_value='blop')
     answer = get_answer(['blip', 'blop'], _input)
 
     # return the correct answer
     assert answer == 'blop'
 
-    # asked the user for it
-    assert _input.call_args_list == [
-        ({}, (['blip', 'blop'], 'blop'))
-    ]
-
 
 def test_retry_to_get_answer():
-    answers = [False, False, True]
+    answers = ['blarp', '3', 'blip', 'never reached', 'blop']
 
     def input_function():
-        if answers.pop():
-            return 'blip'
-        else:
-            return 'not really there'
+        return answers.pop(0)
 
     answer = get_answer(['blip', 'blop'], input_function)
 
     # return the correct answer
     assert answer == 'blip'
 
-    # asked the user for it 3 times
-    assert len(input_function.call_args_list) == 3
