@@ -5,6 +5,7 @@ from choose_activity.helpers import weighted_choice
 
 def test_no_choice():
     assert weighted_choice(None) is None
+    assert weighted_choice({}) is None
 
 
 def test_single_choice():
