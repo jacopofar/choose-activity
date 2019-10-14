@@ -72,7 +72,10 @@ def user_selection(options: List[str], choice: str) -> str:
 
 
 def enumerate_options(options: List[str]) -> str:
-    """Represents the options nicely
+    """Represent the options nicely.
+
+    The returned value places the options in such a way that it's easy
+    to distinguish them and associate them with the index starting from 1
 
     Parameters
     ----------
@@ -84,7 +87,9 @@ def enumerate_options(options: List[str]) -> str:
     str
         A string representing the options to be printed
     """
-    return 'implement me'
+    return '\n'.join([
+        f'{i + 1}) {option}' for i, option in enumerate(options)
+    ])
 
 
 def get_answer(

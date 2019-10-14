@@ -1,7 +1,11 @@
 from unittest.mock import MagicMock
 import pytest
 
-from choose_activity.helpers import user_selection, get_answer
+from choose_activity.helpers import (
+    get_answer,
+    enumerate_options,
+    user_selection,
+    )
 
 
 def test_no_options():
@@ -93,3 +97,8 @@ def test_retry_to_get_answer():
     # return the correct answer
     assert answer == 'blip'
 
+
+def test_enumerate_options():
+    # not much to test here, just ensure it contains the option text
+    assert len(['a', 'bb']) > 0
+    assert 'duckburg' in enumerate_options(['a', 'duckburg']).lower()
