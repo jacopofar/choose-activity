@@ -31,6 +31,20 @@ def test_empty_choice():
     assert 'no choice' in str(excinfo.value)
 
 
+def test_invalid_choice():
+    with pytest.raises(IndexError) as excinfo:
+        user_selection(
+            ['apple', 'banana', '🤠', 'blob'],
+            'orange')
+    assert 'invalid choice' in str(excinfo.value)
+
+    with pytest.raises(IndexError) as excinfo:
+        user_selection(
+            ['apple', 'banana', '🤠', 'blob'],
+            '6')
+    assert 'invalid choice' in str(excinfo.value)
+
+
 def test_valid_choice():
     assert user_selection(
         ['apple', 'banana', '🤠', 'blob'],
