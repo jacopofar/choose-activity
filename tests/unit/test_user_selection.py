@@ -1,6 +1,7 @@
+from unittest.mock import MagicMock
 import pytest
 
-from choose_activity.helpers import user_selection
+from choose_activity.helpers import user_selection, get_answer
 
 
 def test_no_options():
@@ -66,3 +67,47 @@ def test_valid_choice():
         ['apple', 'banana', '🤠', 'blob'],
         '🤠') == '🤠'
 
+
+def test_get_answer():
+    _output = MagicMock()
+
+    _input = MagicMock(return_value='blip')
+    answer = get_answer(['blip', 'blop'], _input, _output)
+
+    # return the correct answer
+    assert answer == 'blip'
+
+    # asked the user for it
+    assert _input.call_args_list == [
+        ({}, (['blip', 'blop'], 'blip'))
+    ]
+
+    _input = MagicMock(return_value='blop')
+    answer = get_answer(['blip', 'blop'], _input, _output)
+
+    # return the correct answer
+    assert answer == 'blop'
+
+    # asked the user for it
+    assert _input.call_args_list == [
+        ({}, (['blip', 'blop'], 'blop'))
+    ]
+
+
+def test_retry_to_get_answer():
+    _output = MagicMock()
+    answers = [False, False, True]
+
+    def input_function():
+        if answers.pop():
+            return 'blip'
+        else:
+            return 'not really there'
+
+    answer = get_answer(['blip', 'blop'], input_function, _output)
+
+    # return the correct answer
+    assert answer == 'blip'
+
+    # asked the user for it 3 times
+    assert len(input_function.call_args_list) == 3
