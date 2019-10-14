@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 from random import random
 
 
@@ -25,3 +25,28 @@ def weighted_choice(choices_and_weights: Dict[str, float]) -> str:
         chosen_weight -= v
         if chosen_weight < 0:
             return k
+
+
+def user_selection(options: List[str], choice: str) -> str:
+    """Choose a value from the user input answer.
+
+    >>> user_selection(['apple', 'banana', 'orange'], 'banana')
+    'banana'
+
+    >>> user_selection(['apple', 'banana', 'orange'], '1')
+    'apple'
+
+    Parameters
+    ----------
+    options : List[str]
+        List of options
+    choice : str
+        The user input, can be an 1-based index or a string to match
+
+    Returns
+    -------
+    str
+        An element from the options list corresponding to the choice
+    """
+    if not len(options):
+        raise ValueError('No options given')
