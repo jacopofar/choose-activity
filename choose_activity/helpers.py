@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import json
 from pathlib import Path
 from random import random
+import time
 from typing import Callable, Dict, List, Optional
 
 
@@ -154,6 +155,9 @@ def load_state(fname: Path) -> ActivitiesState:
         return ActivitiesState({})
 
     raw_obj = json.loads(open(fname).read())
+    if raw_obj['current_activity_start'] is not None:
+        raw_obj['current_activity_start'] = datetime.fromisoformat(
+            raw_obj['current_activity_start'])
     return ActivitiesState(
         raw_obj['activities'],
         current_activity=raw_obj['current_activity'],
@@ -175,4 +179,13 @@ def save_state(fname: Path, state: ActivitiesState) -> None:
     -------
     None
     """
-    ...
+    write_date = None
+    if state.current_activity_start is not None:
+        write_date = state.current_activity_start.isoformat()
+    raw_obj = dict(
+        activities=state.activities,
+        current_activity=state.current_activity,
+        current_activity_start=write_date,
+    )
+    with open(fname, 'w') as f:
+        f.write(json.dumps(raw_obj, indent=2))
