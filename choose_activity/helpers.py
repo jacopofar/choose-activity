@@ -1,9 +1,8 @@
 from dataclasses import dataclass
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
 import json
 from pathlib import Path
 from random import random
-import time
 from typing import Callable, Dict, List, Optional
 
 
@@ -127,7 +126,7 @@ def get_answer(
     """
 
     print(enumerate_options(options))
-
+    print('\nChoose an option using the number or a word:')
     while True:
         choice = input_fun()
         try:
