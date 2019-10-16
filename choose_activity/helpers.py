@@ -1,5 +1,16 @@
-from typing import Callable, Dict, List
+from dataclasses import dataclass
+from datetime import datetime
+import json
+from pathlib import Path
 from random import random
+from typing import Callable, Dict, List, Optional
+
+
+@dataclass
+class ActivitiesState:
+    activities: Dict[str, float]
+    current_activity: Optional[str] = None
+    current_activity_start: Optional[datetime] = None
 
 
 def weighted_choice(choices_and_weights: Dict[str, float]) -> str:
@@ -122,3 +133,46 @@ def get_answer(
             return user_selection(options, choice)
         except IndexError as ie:
             print(ie.args[0])
+
+
+def load_state(fname: Path) -> ActivitiesState:
+    """Load the state from the activities file.
+
+    If the file does not exist, an empty state is generated.
+
+    Parameters
+    ----------
+    fname : Path
+        file path from where to load
+
+    Returns
+    -------
+    ActivitiesState
+        The loaded activities or an initialised one
+    """
+    if not fname.exists():
+        return ActivitiesState({})
+
+    raw_obj = json.loads(open(fname).read())
+    return ActivitiesState(
+        raw_obj['activities'],
+        current_activity=raw_obj['current_activity'],
+        current_activity_start=raw_obj['current_activity_start'],
+    )
+
+
+def save_state(fname: Path, state: ActivitiesState) -> None:
+    """Save the state in a file.
+
+    Parameters
+    ----------
+    fname : Path
+        File path where to write
+    state : ActivitiesState
+        The activity state to write
+
+    Returns
+    -------
+    None
+    """
+    ...
