@@ -54,7 +54,7 @@ def main():
             print('Exiting without changes')
             return
 
-        new_weight = get_weight(f'New weight for the activity {choice}')
+        new_weight = get_weight(f'New weight for the activity {choice}', input)
         activities_state[choice] = new_weight
         save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
         print(f'Activity updated: {choice} has now weight {new_weight}')

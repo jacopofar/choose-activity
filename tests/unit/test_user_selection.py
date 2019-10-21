@@ -3,6 +3,7 @@ import pytest
 
 from choose_activity.helpers import (
     get_answer,
+    get_weight,
     enumerate_options,
     user_selection,
     )
@@ -102,3 +103,15 @@ def test_enumerate_options():
     # not much to test here, just ensure it contains the option text
     assert len(['a', 'bb']) > 0
     assert 'duckburg' in enumerate_options(['a', 'duckburg']).lower()
+
+
+def test_get_weight():
+    _input = MagicMock(return_value='1.3')
+    assert get_weight('hello', _input) == 1.3
+
+    answers = ['blarp', '3', 'never reached']
+
+    def input_function():
+        return answers.pop(0)
+
+    assert get_weight('hello', input_function) == 3.0
