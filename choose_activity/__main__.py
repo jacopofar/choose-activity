@@ -1,6 +1,11 @@
 from pathlib import Path
 
-from choose_activity.helpers import get_answer, load_state
+from choose_activity.helpers import (
+    get_answer,
+    get_weight,
+    load_state,
+    save_state,
+    )
 
 ACTIVITIES_STATE_FILE_PATH = Path.home() / '.choose_activity.activities'
 
@@ -24,6 +29,35 @@ def main():
 
     if choice == 'exit':
         print('Bye.')
+        return
+
+    if choice == 'delete activity':
+        delete_candidates = list(activities_state.activities)
+        delete_candidates += ['Exit']
+        choice = get_answer(delete_candidates)
+
+        if choice == 'Exit':
+            print('Exiting without changes')
+            return
+
+        del activities_state[choice]
+        save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
+        print(f'Activity deleted: {choice}')
+        return
+
+    if choice == 'change the weight of an activity':
+        change_candidates = list(activities_state.activities)
+        change_candidates += ['Exit']
+        choice = get_answer(change_candidates)
+
+        if choice == 'Exit':
+            print('Exiting without changes')
+            return
+
+        new_weight = get_weight(f'New weight for the activity {choice}')
+        activities_state[choice] = new_weight
+        save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
+        print(f'Activity updated: {choice} has now weight {new_weight}')
         return
 
     raise NotImplementedError(f'Choice {choice} not implemented!')
