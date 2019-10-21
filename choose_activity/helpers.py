@@ -191,6 +191,21 @@ def save_state(fname: Path, state: ActivitiesState) -> None:
 
 
 def get_weight(prompt: str, input_fun: Callable[..., str]) -> float:
+    """Prompt the user for a weight until a proper value is given.
+
+    Parameters
+    ----------
+    prompt : str
+        The prompt for the weight to be shown to the user
+    input_fun : Callable[..., str]
+        Function to be invoked, possibly multiple times,
+        to get the input from the user
+
+    Returns
+    -------
+    float
+        The first valid weight given
+    """
     print(prompt)
     while True:
         candidate = input_fun()
