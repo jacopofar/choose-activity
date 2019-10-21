@@ -189,5 +189,15 @@ def save_state(fname: Path, state: ActivitiesState) -> None:
     with open(fname, 'w') as f:
         f.write(json.dumps(raw_obj, indent=2))
 
+
 def get_weight(prompt: str, input_fun: Callable[..., str]) -> float:
-    raise NotImplementedError('yet to be implemented')
+    print(prompt)
+    while True:
+        candidate = input_fun()
+        try:
+            return float(candidate)
+        except ValueError:
+            print(
+                f'Invalid value "{candidate}", use a number with dot as'
+                ' decimal separator')
+
