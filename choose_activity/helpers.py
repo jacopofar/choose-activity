@@ -64,7 +64,7 @@ def user_selection(options: List[str], choice: str) -> str:
     str
         An element from the options list corresponding to the choice
     """
-    if not len(options):
+    if not options:
         raise ValueError('no options given')
     if choice.strip() == '':
         raise IndexError('no choice')
@@ -215,4 +215,3 @@ def get_weight(prompt: str, input_fun: Callable[..., str]) -> float:
             print(
                 f'Invalid value "{candidate}", use a number with dot as'
                 ' decimal separator')
-
