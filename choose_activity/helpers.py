@@ -21,6 +21,7 @@ class ActivityOutcome:
 
     activity: str
     start_at: datetime
+    end_at: datetime
     is_done: bool
     feedback: str
 
@@ -238,4 +239,12 @@ def log_activity_result(fname: Path, outcome: ActivityOutcome):
     outcome : ActivityOutcome
         The activity outcome to store
     """
-    raise NotImplementedError('Implement activity log please')
+
+    with open(fname, 'a') as f:
+        f.write(json.dumps(dict(
+             activity=outcome.activity,
+             start_at=outcome.start_at.isoformat(),
+             end_at=outcome.end_at.isoformat(),
+             is_done=outcome.is_done,
+             feedback=outcome.feedback
+        ), indent=2))
