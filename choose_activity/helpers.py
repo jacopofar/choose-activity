@@ -247,4 +247,5 @@ def log_activity_result(fname: Path, outcome: ActivityOutcome):
              end_at=outcome.end_at.isoformat(),
              is_done=outcome.is_done,
              feedback=outcome.feedback
-        ), indent=2))
+        )))
+        f.write('\n')

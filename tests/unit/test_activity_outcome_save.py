@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from pathlib import Path
 
 from choose_activity.helpers import ActivityOutcome, log_activity_result
 
@@ -20,4 +19,6 @@ def test_log_outcome(tmp_path):
                     ''',
         ))
         content = open(test_path).read()
-        assert len(content.split('\n')) == l + 1
+        lines = content.split('\n')
+        assert lines[-1] == ''
+        assert len(lines) == l + 2  # 0-indexed + empty line
