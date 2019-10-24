@@ -212,6 +212,16 @@ def get_weight(prompt: str, input_fun: Callable[..., str]) -> float:
         try:
             return float(candidate)
         except ValueError:
-            print(
-                f'Invalid value "{candidate}", use a number with dot as'
-                ' decimal separator')
+            print(f'Invalid value "{candidate}", use a number with dot as'
+                  ' decimal separator')
+
+
+def log_activity_result(desc: Dict):
+    """Log the result of an activity.
+
+    Parameters
+    ----------
+    desc : Dict
+        The parameters of the activity
+    """
+    raise NotImplementedError('Implement activity log please')

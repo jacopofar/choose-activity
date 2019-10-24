@@ -7,16 +7,20 @@ from choose_activity.helpers import (
     get_weight,
     load_state,
     save_state,
-    weighted_choice
+    weighted_choice,
+    log_activity_result
     )
 
 ACTIVITIES_STATE_FILE_PATH = Path.home() / '.choose_activity.activities'
+ACTIVITIES_LOG_FILE_PATH = Path.home() / '.choose_activity.log'
 
 TXT_NEW_ACTIVITY = 'Add a new type of activity'
 TXT_CHANGE_WEIGHT = 'Change the weight of an activity'
 TXT_DELETE_ACTIVITY = 'Delete activity'
 TXT_EXIT = 'Exit'
 TXT_DO_ACTIVITY = 'DO SOMETHING!'
+TXT_DONE = 'Done that'
+TXT_SKIPPED = 'Skipped'
 
 
 def main():
@@ -24,8 +28,22 @@ def main():
     # if an activity is going on, ask for a feedback to quit it
     if activities_state.current_activity is not None:
         # if an activity was started, can only ask for feedback and close it
-        raise NotImplementedError('manage activity closing!')
-
+        print(f'The activity was: {activities_state.current_activity}')
+        print('Did you do it?')
+        is_done = get_answer([TXT_DONE, TXT_SKIPPED], input) == TXT_DONE
+        print(':)' if is_done else ':(')
+        feedback = input('How do you feel about it?\n')
+        log_activity_result(dict(
+            activity=activities_state.current_activity,
+            start_at=activities_state.current_activity_start,
+            is_done=is_done,
+            feedback=feedback
+        ))
+        activities_state.current_activity = None
+        activities_state.current_activity_start = None
+        save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
+        print('Bye.')
+        return
     # one can always add an activity
     choices = [TXT_NEW_ACTIVITY]
     if activities_state.activities:
