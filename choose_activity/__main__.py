@@ -87,7 +87,7 @@ def main():
         Go!
         '''))
         activities_state.current_activity = activity
-        activities_state.current_activity_start = datetime.now()
+        activities_state.current_activity_start = datetime.now().astimezone()
         save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
         return
 
