@@ -5,6 +5,12 @@ setup(name='Choose activity',
       description='Choose a random activity to do from a list',
       author='Jacopo Farina',
       packages=find_packages(),
+      install_requires=[],  # yep, nothing
       # dependency only for tests, yet to investigate the best practice
-      # install_requires=[''],
+      extras_require={
+          'dev': [
+              'pytest>=5',
+              'pytest-cov>=2.8.1'
+              ]
+          }
       )
