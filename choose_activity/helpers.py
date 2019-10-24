@@ -8,9 +8,21 @@ from typing import Callable, Dict, List, Optional
 
 @dataclass
 class ActivitiesState:
+    """Represent the available activities and state of the current one."""
+
     activities: Dict[str, float]
     current_activity: Optional[str] = None
     current_activity_start: Optional[datetime] = None
+
+
+@dataclass
+class ActivityOutcome:
+    """Represent the result of an activity."""
+
+    activity: str
+    start_at: datetime
+    is_done: bool
+    feedback: str
 
 
 def weighted_choice(choices_and_weights: Dict[str, float]) -> str:
@@ -216,12 +228,14 @@ def get_weight(prompt: str, input_fun: Callable[..., str]) -> float:
                   ' decimal separator')
 
 
-def log_activity_result(desc: Dict):
+def log_activity_result(fname: Path, outcome: ActivityOutcome):
     """Log the result of an activity.
 
     Parameters
     ----------
-    desc : Dict
-        The parameters of the activity
+    fname : Path
+        File path where to write
+    outcome : ActivityOutcome
+        The activity outcome to store
     """
     raise NotImplementedError('Implement activity log please')

@@ -3,6 +3,7 @@ from pathlib import Path
 from textwrap import dedent
 
 from choose_activity.helpers import (
+    ActivityOutcome,
     get_answer,
     get_weight,
     load_state,
@@ -33,12 +34,14 @@ def main():
         is_done = get_answer([TXT_DONE, TXT_SKIPPED], input) == TXT_DONE
         print(':)' if is_done else ':(')
         feedback = input('How do you feel about it?\n')
-        log_activity_result(dict(
-            activity=activities_state.current_activity,
-            start_at=activities_state.current_activity_start,
-            is_done=is_done,
-            feedback=feedback
-        ))
+        log_activity_result(
+            ACTIVITIES_LOG_FILE_PATH,
+            ActivityOutcome(
+                activity=activities_state.current_activity,
+                start_at=activities_state.current_activity_start,
+                is_done=is_done,
+                feedback=feedback
+            ))
         activities_state.current_activity = None
         activities_state.current_activity_start = None
         save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
