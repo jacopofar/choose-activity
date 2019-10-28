@@ -39,6 +39,7 @@ def main():
             ActivityOutcome(
                 activity=activities_state.current_activity,
                 start_at=activities_state.current_activity_start,
+                end_at=datetime.now().astimezone(),
                 is_done=is_done,
                 feedback=feedback
             ))
