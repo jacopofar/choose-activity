@@ -88,9 +88,14 @@ def user_selection(options: List[str], choice: str) -> str:
         return options[choice_index - 1]
 
     except ValueError:
+        chosen = None
         for option in options:
             if choice.lower() in option.lower():
-                return option
+                if chosen is not None:
+                    raise IndexError('More than one option matching')
+                chosen = option
+        if chosen is not None:
+            return chosen
 
     raise IndexError('invalid choice')
 
