@@ -107,9 +107,19 @@ def main():
 
           👉  {activity}
 
-        Latest outcome: {ACTIVITIES_LOG_FILE_PATH, latest_outcome_for_activity(activity)}
         Go!
-        ''')) # NOQA
+        '''))
+        latest = latest_outcome_for_activity(
+            ACTIVITIES_LOG_FILE_PATH,
+            activity,
+        )
+        if latest is not None:
+            print(dedent(f'''
+            This activity has already been done, the latest outcome was:
+
+              📖{latest}
+
+            '''))
         activities_state.current_activity = activity
         activities_state.current_activity_start = datetime.now().astimezone()
         save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
