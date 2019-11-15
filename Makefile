@@ -6,7 +6,7 @@ MAKEFLAGS =+ -rR --warn-undefined-variables
 
 local-test:
 	python3 -m venv .venv
-	.venv/bin/python3 -m pip install .
+	.venv/bin/python3 -m pip install -r requirements-dev.txt
 	.venv/bin/python3 -m pytest
 	rm -rf .venv
 

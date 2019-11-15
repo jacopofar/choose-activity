@@ -87,6 +87,18 @@ def test_get_answer():
     assert answer == 'blop'
 
 
+def test_ambiguous_answer():
+    answers = ['ble', 'bleep', 'blip', 'bleep 2', 'never reached']
+
+    def input_function():
+        return answers.pop(0)
+
+    answer = get_answer(['bleep 1', 'bleep 2', 'extra option'], input_function)
+
+    # return the correct answer
+    assert answer == 'bleep 2'
+
+
 def test_retry_to_get_answer():
     answers = ['blarp', '3', 'blip', 'never reached', 'blop']
 
