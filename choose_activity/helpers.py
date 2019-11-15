@@ -270,7 +270,7 @@ def latest_outcome_for_activity(fname: Path, activity: str) -> Optional[str]:
     -------
     The activity latest outcome, None if not found
     """
-    latest_outcome =  None
+    latest_outcome = None
 
     with open(fname, 'r') as f:
         for line in f:

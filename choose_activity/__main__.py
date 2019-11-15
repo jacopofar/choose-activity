@@ -9,7 +9,8 @@ from choose_activity.helpers import (
     load_state,
     save_state,
     weighted_choice,
-    log_activity_result
+    log_activity_result,
+    latest_outcome_for_activity,
     )
 
 ACTIVITIES_STATE_FILE_PATH = Path.home() / '.choose_activity.activities'
@@ -106,8 +107,9 @@ def main():
 
           👉  {activity}
 
+        Latest outcome: {ACTIVITIES_LOG_FILE_PATH, latest_outcome_for_activity(activity)}
         Go!
-        '''))
+        ''')) # NOQA
         activities_state.current_activity = activity
         activities_state.current_activity_start = datetime.now().astimezone()
         save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
