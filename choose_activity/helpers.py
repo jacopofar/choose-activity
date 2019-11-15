@@ -254,3 +254,27 @@ def log_activity_result(fname: Path, outcome: ActivityOutcome):
              feedback=outcome.feedback
         )))
         f.write('\n')
+
+
+def latest_outcome_for_activity(fname: Path, activity: str) -> Optional[str]:
+    """Retrieve the latest result of an activity.
+
+    Parameters
+    ----------
+    fname : Path
+        File path where to write
+    activity : str
+        The name of the activity
+
+    Returns
+    -------
+    The activity latest outcome, None if not found
+    """
+    latest_outcome =  None
+
+    with open(fname, 'r') as f:
+        for line in f:
+            logm = json.loads(line)
+            if logm['activity'] == activity:
+                latest_outcome = logm['feedback']
+    return latest_outcome

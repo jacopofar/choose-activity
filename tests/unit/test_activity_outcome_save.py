@@ -41,4 +41,9 @@ def test_get_latest_outcome(tmp_path):
 
     assert (
         latest_outcome_for_activity(test_path, 'activity type #1') ==
-        'activity description 1!')
+        'activity description 1!'
+    )
+
+    assert (
+        latest_outcome_for_activity(test_path, 'activity never done') is None
+    )
