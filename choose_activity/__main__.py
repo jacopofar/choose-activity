@@ -117,7 +117,7 @@ def main():
             print(dedent(f'''
             This activity has already been done, the latest outcome was:
 
-              📖{latest}
+              📖 {latest}
 
             '''))
         activities_state.current_activity = activity
