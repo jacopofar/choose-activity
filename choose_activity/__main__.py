@@ -5,6 +5,7 @@ from textwrap import dedent
 from choose_activity.helpers import (
     ActivityOutcome,
     get_answer,
+    get_bool,
     get_weight,
     load_state,
     save_state,
@@ -44,6 +45,10 @@ def main():
                 is_done=is_done,
                 feedback=feedback
             ))
+        if get_bool('Delete this activity from the list?', input):
+            del activities_state.activities[activities_state.current_activity]
+            print('Deleted!')
+
         activities_state.current_activity = None
         activities_state.current_activity_start = None
         save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
