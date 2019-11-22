@@ -3,6 +3,7 @@ import pytest
 
 from choose_activity.helpers import (
     get_answer,
+    get_bool,
     get_weight,
     enumerate_options,
     user_selection,
@@ -127,3 +128,21 @@ def test_get_weight():
         return answers.pop(0)
 
     assert get_weight('hello', input_function) == 3.0
+
+
+def test_get_bool():
+    _input = MagicMock(return_value='y')
+    assert get_bool('hello', _input)
+
+    _input = MagicMock(return_value='n')
+    assert not get_bool('hello', _input)
+
+    _input = MagicMock(return_value='N')
+    assert not get_bool('hello', _input)
+
+    answers = ['blarp', 'Y', 'never reached']
+
+    def input_function():
+        return answers.pop(0)
+
+    assert get_bool('hello', input_function)
