@@ -278,3 +278,31 @@ def latest_outcome_for_activity(fname: Path, activity: str) -> Optional[str]:
             if logm['activity'] == activity:
                 latest_outcome = logm['feedback']
     return latest_outcome
+
+
+def get_bool(prompt: str, input_fun: Callable[..., str]) -> bool:
+    """Prompt the user for a yes/no until a proper value is given.
+
+    Parameters
+    ----------
+    prompt : str
+        The prompt for the choice to be shown to the user
+    input_fun : Callable[..., str]
+        Function to be invoked, possibly multiple times,
+        to get the input from the user
+
+    Returns
+    -------
+    bool
+        The first valid bool given
+    """
+    print(f'{prompt} [y/n]')
+    while True:
+        candidate = input_fun().lower().strip()
+        try:
+            if candidate == 'y':
+                return True
+            if candidate == 'n':
+                return False
+        except ValueError:
+            print(f'Invalid value "{candidate}", use Y or N')
