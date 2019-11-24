@@ -28,10 +28,21 @@ TXT_SKIPPED = 'Skipped'
 
 def main():
     activities_state = load_state(ACTIVITIES_STATE_FILE_PATH)
+
+    def add_activity():
+        activity_name = input('What is the name of the new activity? ')
+        activity_weight = get_weight('Weight for this activity', input)
+        activities_state.activities[activity_name] = activity_weight
+        print('Activity inserted!')
+        save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
+
     # if an activity is going on, ask for a feedback to quit it
     if activities_state.current_activity is not None:
         # if an activity was started, can only ask for feedback and close it
-        print(f'The activity was: {activities_state.current_activity}')
+        print(f'The activity is: {activities_state.current_activity}')
+        if get_bool('Do you want to add a new activity?', input):
+            add_activity()
+            return
         print('Did you do it?')
         is_done = get_answer([TXT_DONE, TXT_SKIPPED], input) == TXT_DONE
         print(':)' if is_done else ':(')
@@ -83,11 +94,7 @@ def main():
         return
 
     if choice == TXT_NEW_ACTIVITY:
-        activity_name = input('What is the name of the new activity? ')
-        activity_weight = get_weight('Weight for this activity', input)
-        activities_state.activities[activity_name] = activity_weight
-        print('Activity inserted!')
-        save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
+        add_activity()
         return
 
     if choice == TXT_CHANGE_WEIGHT:
