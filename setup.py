@@ -5,7 +5,7 @@ setup(
     version='1.0',
     description='Choose a random activity to do from a list',
     author='Jacopo Farina',
-    python_requires='>=3.6',
+    python_requires='>=3.7', # it uses dataclasses
     install_requires=[],  # yep, nothing
     # dependency only for tests, yet to investigate the best practice
     extras_require={
