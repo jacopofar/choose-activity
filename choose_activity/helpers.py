@@ -88,14 +88,14 @@ def user_selection(options: List[str], choice: str) -> str:
         return options[choice_index - 1]
 
     except ValueError:
-        chosen = None
+        chosen = []
         for option in options:
             if choice.lower() in option.lower():
-                if chosen is not None:
-                    raise IndexError('More than one option matching')
-                chosen = option
-        if chosen is not None:
-            return chosen
+                chosen.append(option)
+        if len(chosen) == 1:
+            return chosen[0]
+        if len(chosen) > 1:
+            raise IndexError('More than one option matching', chosen)
 
     raise IndexError('invalid choice')
 
@@ -151,6 +151,11 @@ def get_answer(
             return user_selection(options, choice)
         except IndexError as ie:
             print(ie.args[0])
+            if len(ie.args) == 2:
+                print('Matches:')
+                for opt in ie.args[1]:
+                    print(f' -  {opt}')
+                print('Please be more specific')
 
 
 def load_state(fname: Path) -> ActivitiesState:
