@@ -62,6 +62,10 @@ def test_valid_choice():
         'apple') == 'apple'
 
     assert user_selection(
+        ['apple', 'the banana', '🤠', 'blob'],
+        'banana') == 'the banana'
+
+    assert user_selection(
         ['apple', 'banana', '🤠', 'blob'],
         'APPLE') == 'apple'
 
