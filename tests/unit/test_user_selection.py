@@ -51,6 +51,13 @@ def test_invalid_choice():
             '6')
     assert 'invalid choice' in str(excinfo.value)
 
+    with pytest.raises(IndexError) as excinfo:
+        user_selection(
+            ['the apple', 'the banana', '🤠', 'blob'],
+            'the')
+    assert 'More than one option' in str(excinfo.value)
+    assert excinfo.value.args[1] == ['the apple', 'the banana']
+
 
 def test_valid_choice():
     assert user_selection(
