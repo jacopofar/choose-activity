@@ -129,6 +129,7 @@ def get_answer(
 
     The input function will be invoked until the user provides an answer
     within the options.
+
     Parameters
     ----------
     options : List[str]
@@ -142,7 +143,6 @@ def get_answer(
     str
         The valid choice from the user
     """
-
     print(enumerate_options(options))
     print('\nChoose an option using the number or a word:')
     while True:
@@ -249,7 +249,6 @@ def log_activity_result(fname: Path, outcome: ActivityOutcome):
     outcome : ActivityOutcome
         The activity outcome to store
     """
-
     with open(fname, 'a') as f:
         f.write(json.dumps(dict(
              activity=outcome.activity,
