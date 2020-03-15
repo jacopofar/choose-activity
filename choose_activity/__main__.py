@@ -105,7 +105,7 @@ def main():
         if choice == TXT_EXIT:
             print('Exiting without changes')
             return
-
+        print(f'The current weight is {activities_state.activities[choice]}')
         new_weight = get_weight(f'New weight for the activity {choice}', input)
         activities_state.activities[choice] = new_weight
         save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
