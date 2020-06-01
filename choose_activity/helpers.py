@@ -275,13 +275,15 @@ def latest_outcome_for_activity(fname: Path, activity: str) -> Optional[str]:
     The activity latest outcome, None if not found
     """
     latest_outcome = None
-
-    with open(fname, 'r') as f:
-        for line in f:
-            logm = json.loads(line)
-            if logm['activity'] == activity:
-                latest_outcome = logm['feedback']
-    return latest_outcome
+    try:
+        with open(fname, 'r') as f:
+            for line in f:
+                logm = json.loads(line)
+                if logm['activity'] == activity:
+                    latest_outcome = logm['feedback']
+        return latest_outcome
+    except FileNotFoundError:
+        return None
 
 
 def get_bool(prompt: str, input_fun: Callable[..., str]) -> bool:

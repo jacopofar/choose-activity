@@ -47,3 +47,15 @@ def test_get_latest_outcome(tmp_path):
     assert (
         latest_outcome_for_activity(test_path, 'activity never done') is None
     )
+
+
+def test_get_latest_outcome_no_file(tmp_path):
+    test_path = tmp_path / 'activities_state.log'
+
+    assert (
+        latest_outcome_for_activity(test_path, 'activity type #1') is None
+    )
+
+    assert (
+        latest_outcome_for_activity(test_path, 'activity never done') is None
+    )
