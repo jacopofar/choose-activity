@@ -12,6 +12,7 @@ from choose_activity.helpers import (
     weighted_choice,
     log_activity_result,
     latest_outcome_for_activity,
+    FontColor
     )
 
 ACTIVITIES_STATE_FILE_PATH = Path.home() / '.choose_activity.activities'
@@ -37,6 +38,7 @@ def main():
         save_state(ACTIVITIES_STATE_FILE_PATH, activities_state)
 
     # if an activity is going on, ask for a feedback to quit it
+    print('')
     if activities_state.current_activity is not None:
         # if an activity was started, can only ask for feedback and close it
         print(f'The activity is: {activities_state.current_activity}')
@@ -73,7 +75,9 @@ def main():
         choices.append(TXT_DO_ACTIVITY)
     # It's nicer to have exit at the end of the list
     choices.append(TXT_EXIT)
+    print(FontColor.Blue, end="")
     choice = get_answer(choices, input)
+    print(FontColor.Reset)
 
     if choice == TXT_EXIT:
         print('Bye.')
@@ -82,8 +86,9 @@ def main():
     if choice == TXT_DELETE_ACTIVITY:
         delete_candidates = list(activities_state.activities)
         delete_candidates += [TXT_EXIT]
+        print(FontColor.Magenta, end="")
         choice = get_answer(delete_candidates, input)
-
+        print(FontColor.Reset)
         if choice == TXT_EXIT:
             print('Exiting without changes')
             return
@@ -100,7 +105,9 @@ def main():
     if choice == TXT_CHANGE_WEIGHT:
         change_candidates = list(activities_state.activities)
         change_candidates += [TXT_EXIT]
+        print(FontColor.Magenta, end="")
         choice = get_answer(change_candidates, input)
+        print(FontColor.Reset)
 
         if choice == TXT_EXIT:
             print('Exiting without changes')
@@ -116,9 +123,9 @@ def main():
         activity = weighted_choice(activities_state.activities)
         print(dedent(f'''
         The chosen activity is:
-
+        {FontColor.Green}
           👉  {activity}
-
+        {FontColor.Reset}
         Go!
         '''))
         latest = latest_outcome_for_activity(
