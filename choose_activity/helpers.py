@@ -26,6 +26,19 @@ class ActivityOutcome:
     feedback: str
 
 
+class FontColor:
+    """The ANSI code colors used to change the display text in the console."""
+    White = "\u001b[30m"
+    Red = "\u001b[31m"
+    Green = "\u001b[32m"
+    Yellow = "\u001b[33m"
+    Blue = "\u001b[34m"
+    Magenta = "\u001b[35m"
+    Cyan = "\u001b[36m"
+    Gray = "\u001b[37m"
+    Reset = "\u001b[0m"
+
+
 def weighted_choice(choices_and_weights: Dict[str, float]) -> str:
     """Choose a key with a probability proportional to the value.
 
@@ -122,9 +135,9 @@ def enumerate_options(options: List[str]) -> str:
 
 
 def get_answer(
-    options: List[str],
-    input_fun: Callable[..., str],
-        ) -> str:
+        options: List[str],
+        input_fun: Callable[..., str],
+) -> str:
     """Ask for an answer until it gets one.
 
     The input function will be invoked until the user provides an answer
@@ -251,11 +264,11 @@ def log_activity_result(fname: Path, outcome: ActivityOutcome):
     """
     with open(fname, 'a') as f:
         f.write(json.dumps(dict(
-             activity=outcome.activity,
-             start_at=outcome.start_at.isoformat(),
-             end_at=outcome.end_at.isoformat(),
-             is_done=outcome.is_done,
-             feedback=outcome.feedback
+            activity=outcome.activity,
+            start_at=outcome.start_at.isoformat(),
+            end_at=outcome.end_at.isoformat(),
+            is_done=outcome.is_done,
+            feedback=outcome.feedback
         )))
         f.write('\n')
 
