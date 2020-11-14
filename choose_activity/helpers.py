@@ -318,10 +318,10 @@ def get_bool(prompt: str, input_fun: Callable[..., str]) -> bool:
     print(f'{prompt} [y/n]')
     while True:
         candidate = input_fun().lower().strip()
-        try:
-            if candidate == 'y':
-                return True
-            if candidate == 'n':
-                return False
-        except ValueError:
-            print(f'Invalid value "{candidate}", use Y or N')
+        
+        if candidate == 'y':
+            return True
+        if candidate == 'n':
+            return False
+        
+        print(f'Invalid value "{candidate}", use Y or N')
